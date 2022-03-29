@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import sk.ness.academy.dao.ArticleDAO;
 import sk.ness.academy.domain.Article;
+import sk.ness.academy.domain.Comment;
 
 @Service
 @Transactional
@@ -23,16 +24,32 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  public Comment findCommentByID(final Integer commentId) { return this.articleDAO.findCommentByID(commentId);}
+
+  @Override
   public void deleteByID(final Integer articleId) {this.articleDAO.deleteByID(articleId);}
 
   @Override
+  public void deleteCommentByID(final Integer commentId) {this.articleDAO.deleteCommentByID(commentId);}
+
+  @Override
   public List<Article> findAll() {
-	  return this.articleDAO.findAll();
+    return this.articleDAO.findAll();
+  }
+
+  @Override
+  public List<Comment> findAllComments() {
+    return this.articleDAO.findAllComments();
   }
 
   @Override
   public void createArticle(final Article article) {
-	  this.articleDAO.persist(article);
+    this.articleDAO.persist(article);
+  }
+
+  @Override
+  public void createComment(final Comment comment) {
+    this.articleDAO.persist(comment);
   }
 
   @Override
