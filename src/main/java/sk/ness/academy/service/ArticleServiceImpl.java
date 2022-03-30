@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import sk.ness.academy.dao.ArticleDAO;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
+import sk.ness.academy.dto.NoCommentArticle;
 
 @Service
 @Transactional
@@ -41,6 +42,12 @@ public class ArticleServiceImpl implements ArticleService {
   public List<Comment> findAllComments() {
     return this.articleDAO.findAllComments();
   }
+
+  @Override
+  public List<NoCommentArticle> findAllArticles(){ return articleDAO.findAllArticles();}
+
+  @Override
+  public List<NoCommentArticle> findAllArticlesWithText(String searchText) {return this.articleDAO.findAllArticlesWithText(searchText);}
 
   @Override
   public void createArticle(final Article article) {

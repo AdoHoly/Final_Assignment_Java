@@ -4,6 +4,7 @@ import java.util.List;
 
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
+import sk.ness.academy.dto.NoCommentArticle;
 
 public interface ArticleService {
 
@@ -16,8 +17,13 @@ public interface ArticleService {
 	  /** Returns all available {@link Article}s */
 	  List<Article> findAll();
 
+	  List<NoCommentArticle> findAllArticles();
+
 	  /** Returns all available {@link Comment}s */
 	  List<Comment> findAllComments();
+
+	  /** Find all {@link Article} with related text*/
+	  List<NoCommentArticle> findAllArticlesWithText(String searchText);
 
 	  /** Creates new {@link Article} */
 	  void createArticle(Article article);
@@ -33,5 +39,7 @@ public interface ArticleService {
 
 	  /** Creates new {@link Comment} */
 	  void createComment(Comment comment);
+
+
 
 	}

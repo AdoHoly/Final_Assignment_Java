@@ -13,7 +13,7 @@ public class NoCommentArticle {
     private String title;
     private String text;
     private String author;
-    private TimestampType createTimestamp;
+    private Date createTimestamp;
 
     public Integer getId() {
         return id;
@@ -48,11 +48,11 @@ public class NoCommentArticle {
     }
 
 
-    public TimestampType getCreateTimestamp() {
+    public Date getCreateTimestamp() {
         return createTimestamp;
     }
 
-    public void setCreateTimestamp(TimestampType createTimestamp) {
+    public void setCreateTimestamp(Date createTimestamp) {
         this.createTimestamp = createTimestamp;
     }
 }

@@ -10,6 +10,4 @@ public interface AuthorService {
 	  /** Returns all available {@link Author}s */
 	  List<Author> findAll();
 
-	  List<NoCommentArticle> findAllArticles();
-
 	}

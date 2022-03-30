@@ -30,16 +30,7 @@ public class AuthorHibernateDAO implements AuthorDAO {
         .setResultTransformer(new AliasToBeanResultTransformer(Author.class)).list();
   }
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public List<NoCommentArticle> findAllArticles() {
-    return this.sessionFactory.getCurrentSession().createSQLQuery("select * from Articles ")
-            .addScalar("id", IntegerType.INSTANCE)
-            .addScalar("title", StringType.INSTANCE)
-            .addScalar("text", StringType.INSTANCE)
-            .addScalar("author", StringType.INSTANCE)
-            .setResultTransformer(new AliasToBeanResultTransformer(NoCommentArticle.class)).list();
-  }
+
 
 
 

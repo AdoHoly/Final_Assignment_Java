@@ -10,7 +10,7 @@ public interface AuthorDAO {
   /** Returns all available {@link Author}s */
   List<Author> findAll();
 
-  List<NoCommentArticle> findAllArticles();
+
 
 }
 

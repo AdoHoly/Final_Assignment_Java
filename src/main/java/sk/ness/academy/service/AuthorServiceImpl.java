@@ -23,7 +23,6 @@ public class AuthorServiceImpl implements AuthorService {
     return this.authorDAO.findAll();
   }
 
-  @Override
-  public List<NoCommentArticle> findAllArticles(){ return authorDAO.findAllArticles();}
+
 
 }
