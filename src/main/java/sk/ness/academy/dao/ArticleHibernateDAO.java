@@ -11,8 +11,10 @@ import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.type.DateType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.web.server.ResponseStatusException;
 import sk.ness.academy.domain.Article;
 import sk.ness.academy.domain.Comment;
 import sk.ness.academy.dto.NoCommentArticle;
@@ -26,13 +28,20 @@ public class ArticleHibernateDAO implements ArticleDAO {
   @Override
   public Article findByID(final Integer articleId) {
     Article article = this.sessionFactory.getCurrentSession().get(Article.class, articleId);
+    if (article == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Neexistujuce ID");
+    }
     Hibernate.initialize(article.getComments());
     return article;
   }
 
   @Override
   public Comment findCommentByID(final Integer commentId) {
-    return (Comment) this.sessionFactory.getCurrentSession().get(Comment.class, commentId);
+    Comment comment = this.sessionFactory.getCurrentSession().get(Comment.class, commentId);
+    if (comment == null ) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Neexistujuce ID");
+    }
+    return comment;
   }
 
   @SuppressWarnings("unchecked")
@@ -86,11 +95,23 @@ public class ArticleHibernateDAO implements ArticleDAO {
 
   @Override
   public void persist(final Article article) {
+    if (article == null){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "prazdny article");
+    }
+    if(article.getTitle() == null || article.getAuthor() == null || article.getText() == null){
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "nespravny article format");
+    }
     this.sessionFactory.getCurrentSession().saveOrUpdate(article);
   }
 
   @Override
   public void persist(final Comment comment) {
+    if (comment == null){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "prazdny comment");
+    }
+    if(comment.getAuthor() == null || comment.getText() == null){
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "nespravny comment format");
+    }
     this.sessionFactory.getCurrentSession().saveOrUpdate(comment);
   }
 
