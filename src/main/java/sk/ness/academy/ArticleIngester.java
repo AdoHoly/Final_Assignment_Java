@@ -10,6 +10,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import sk.ness.academy.config.DatabaseConfig;
 import sk.ness.academy.service.ArticleService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "sk.ness.academy", excludeFilters = {
@@ -24,8 +29,14 @@ public class ArticleIngester {
       final ArticleService articleService = context.getBean(ArticleService.class);
 
       // Load file with articles and ingest
+      StringBuilder sb = new StringBuilder();
 
-      articleService.ingestArticles(null);
+        Stream<String> stream = Files.lines(Paths.get("articles_to_ingest.txt"));
+        stream.forEach(s -> sb.append(s).append("\n"));
+
+      articleService.ingestArticles(sb.toString());
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 }

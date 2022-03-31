@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import sk.ness.academy.dao.ArticleDAO;
@@ -61,7 +63,14 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   public void ingestArticles(final String jsonArticles) {
-    throw new UnsupportedOperationException("Article ingesting not implemented.");
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      //mapper.writeValueAsString(jsonArticles);
+      List<Article> articles = List.of(mapper.readValue(jsonArticles, Article[].class));
+      articles.forEach(a -> articleDAO.persist(a));
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
   }
 
 }
